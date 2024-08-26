@@ -1,7 +1,7 @@
 import logo from './logo.jpg';
 import './App.css';
 import Header from './components/Header';
-import ClaimPage from './components/pages/ClaimPage';
+import ClaimPage from './components/pages/HomePage';
 import navigation from './components/nav';
 function App() {
   return (

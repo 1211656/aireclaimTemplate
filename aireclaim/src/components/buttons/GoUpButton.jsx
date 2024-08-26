@@ -1,11 +1,38 @@
-const GoUpButton = () => { return (
-    <div>
-        <a  class="absolute bottom-0 right-0 group flex items-center rounded-md bg-clack text-white-500 text-sm font-medium pl-2 pr-3 py-2 shadow-sm   shadow-sm hover:bg-gray-300 border-2 border-solid border-gray-500">
-            <img width="20" height="20" fill="currentColor" class="mr-2" aria-hidden="true" src="https://img.freepik.com/vetores-premium/icone-de-seta-para-cima-dentro-do-simbolo-de-direcao-da-caixa_883533-399.jpg" />
-            Go Up!
-        </a>
-    </div>
-)
+
+import React, {useState, useEffect} from 'react';
+
+const GoUpButton = () => { 
+
+    const [isVisible, setIsVisible] = useState(false);
+
+    const setVisibility = () => {
+        if(window.pageYOffset> 300){
+            setIsVisible(true);
+        }else{
+            setIsVisible(false);
+        }
+    }
+
+    const goUp = () => {
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', setVisibility);
+        return () => window.removeEventListener('scroll', setVisibility);
+    }, []);
+
+    return (
+        isVisible && (
+        <div className="">
+            <button  
+                class=" border-black p-1 rounded-md right-0  text-3xl  hover:bg-gray-900  bg-blue-300"
+                onClick={goUp}>
+                ⬆️
+            </button>
+        </div>
+        )
+    )
 }
 
 export default GoUpButton;

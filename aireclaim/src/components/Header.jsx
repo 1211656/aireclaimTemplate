@@ -3,6 +3,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import React,{useState,useEffect} from 'react';
 import navigation from './nav';
 import ClaimPage from './pages/ClaimPage';
+import HomePage from './pages/HomePage';
 import UserArea from "./pages/UserArea";
 import Delays from "./pages/Delays";
 import Cancellations from "./pages/Cancellations";
@@ -22,6 +23,17 @@ const Header = ({navigation}) => {
 
   
   const [navItems, setNavItems] = useState(navigation);
+  const [goHomeFlag, setGoHomeFlag] = useState(false);
+  const [currentComponent, setCurrentComponent] = useState(<HomePage />)
+  const goHome = () => {
+    console.log('ola')
+    setGoHomeFlag(true);
+    const updatedNavigation = navItems.map((item, index) => {  
+        return {...item, current: false};
+    });
+    setNavItems(updatedNavigation);
+
+  }
 
   const handleNavigation = ({name}) =>{
     
@@ -38,38 +50,64 @@ const Header = ({navigation}) => {
 
     setNavItems(updatedNavigation);
 
-    if(name == navItems[0].name){
-      return <ClaimPage></ClaimPage>
-    }
+    switch (name) {
+    case navItems[0].name:
+      setCurrentComponent(<ClaimPage></ClaimPage>)
+      setGoHomeFlag(false);
+      break;
+    
 
-    if(name == navItems[1].name){
-      return <UserArea></UserArea>
-    }
+    case navItems[1].name:
+      setCurrentComponent(<UserArea></UserArea>)
+      setGoHomeFlag(false);
+      break;
+    
 
-    if(name == navItems[2].name){
-      return <PassengerRights></PassengerRights>
-    }
+    case navItems[2].name:
+      setCurrentComponent(<PassengerRights></PassengerRights>)
+      setGoHomeFlag(false);
+      break;
+    
 
-    if(name == navItems[3].name){
-      return <Delays></Delays>
-    }
-    if(name == navItems[4].name){
-      return <Cancellations></Cancellations>
-    }
-    if(name == navItems[5].name){
-      return <HowItWorks></HowItWorks>
-    }
-    if(name == navItems[6].name){
-      return <FAQ></FAQ>
-    }
-    if(name == navItems[7].name){
-      return <TermsConditions></TermsConditions>
-    }
-    if(name == navItems[8].name){
-      return <Blog></Blog>
-    }
-    if(name == navItems[9].name){
-      return <AboutUs></AboutUs>
+    case navItems[3].name:
+      setCurrentComponent(<Delays></Delays>)
+      setGoHomeFlag(false);
+      break;
+    
+    case navItems[4].name:
+      setCurrentComponent(<Cancellations></Cancellations>)
+      setGoHomeFlag(false);
+      break;
+    
+    case navItems[5].name:
+      setCurrentComponent(<HowItWorks></HowItWorks>)
+      setGoHomeFlag(false);
+      break;
+    
+    case navItems[6].name:
+      setCurrentComponent(<FAQ></FAQ>)
+      setGoHomeFlag(false);
+      break;
+    
+    case navItems[7].name:
+      setCurrentComponent(<TermsConditions></TermsConditions>)
+      setGoHomeFlag(false);
+      break;
+    
+    case navItems[8].name:
+      setCurrentComponent(<Blog></Blog>)
+      setGoHomeFlag(false);
+      break;
+    
+    case navItems[9].name:
+      setCurrentComponent(<AboutUs></AboutUs>)
+      setGoHomeFlag(false);
+      break;
+    
+    // default:
+    //   setCurrentComponent( <HomePage></HomePage>)
+    //   break;
+    // }
     }
     
   }
@@ -93,11 +131,13 @@ const Header = ({navigation}) => {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src="https://static.vecteezy.com/ti/vetor-gratis/p3/6998411-asas-asas-logotipo-design-abstrato-modelo-asas-logo-logo-golden-asas-logo-icon-modern-heraldic-asas-logo-linear-flying-airlines-logotype-wings-logo-concept-wings-logo-projeto-vetor.jpg"
-                className="h-8 w-auto border rounded-full h-8 w-8"
-              />
+              <button className=' rounded-3xl hover:ring-2' onClick={goHome}>
+                <img
+                  alt="Your Company"
+                  src="https://static.vecteezy.com/ti/vetor-gratis/p3/6998411-asas-asas-logotipo-design-abstrato-modelo-asas-logo-logo-golden-asas-logo-icon-modern-heraldic-asas-logo-linear-flying-airlines-logotype-wings-logo-concept-wings-logo-projeto-vetor.jpg"
+                  className="h-8 w-auto border rounded-full h-8 w-8"
+                />
+              </button>
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
@@ -115,6 +155,8 @@ const Header = ({navigation}) => {
                   </a>
                 ))}
               </div>
+
+
             </div>
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -167,7 +209,10 @@ const Header = ({navigation}) => {
       
 
       <div>
-        {navItems[0].current && <ClaimPage />}
+        
+          <hr className=''></hr>
+      
+        {/* {navItems[0].current && <ClaimPage />}
         {navItems[1].current && <UserArea />}
         {navItems[2].current && <PassengerRights />}
         {navItems[3].current && <Delays />}
@@ -177,7 +222,11 @@ const Header = ({navigation}) => {
         {navItems[7].current && <TermsConditions />}
         {navItems[8].current && <Blog />}
         {navItems[9].current && <AboutUs />}
-        
+         */}
+
+         {(!goHomeFlag && currentComponent)}
+
+         {(goHomeFlag && <HomePage />)}
       </div>
 
 
@@ -208,6 +257,8 @@ const Header = ({navigation}) => {
 
             
         </div>
+
+        
         
       </DisclosurePanel>
     </Disclosure>
